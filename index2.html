@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="css/pico.min.css">
+
+
+
+<html style="background-color: #20242c; ">
+
+<main>
+
+<h3 class="container-fluid" style="text-align: center;"> You are <span id=ageCounter></span> years old </p>
+
+</main>
+
+
+<footer>
+
+<p class="container-fluid" style="text-align: center;">
+	<progress id=yearCountdown ></progress>
+	<i><span id=progressText></span>% through <span id=currentYear></span></i>
+<p>
+
+</footer>
+
+<script>
+function ageCounter(year, month, day){
+	const birthDate = new Date(year, month-1, day);
+	const currentDate = new Date();
+	const timeDifference = (currentDate.getTime() - birthDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+	
+	document.getElementById('ageCounter').innerText = timeDifference.toFixed(8);
+};
+
+function yearCountdown(){
+	const yearEnd = new Date(new Date().getFullYear()+1,0, 1).getTime();
+	const yearStart = new Date(new Date().getFullYear(),0, 1).getTime();
+	const progress = (new Date().getTime() - yearStart) / (yearEnd - yearStart);
+	
+	document.getElementById('progressText').innerText = (progress*100).toFixed(2);
+	//Ignore error abt following, it works fine
+	document.getElementById('yearCountdown').value = new Date().getTime() - yearStart;
+	document.getElementById('yearCountdown').max = yearEnd - yearStart;
+	document.getElementById('currentYear').innerText = String(new Date().getFullYear());
+};
+
+setInterval(ageCounter, 1000, 2008, 5, 5);
+yearCountdown();
+</script>
+
+</html>
